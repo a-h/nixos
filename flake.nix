@@ -14,7 +14,7 @@
     in
     {
       packages = forAllSystems (system:
-        import ./pkgs {
+        {
           inputs = inputs;
           pkgs = nixpkgs.legacyPackages.${system};
         });
