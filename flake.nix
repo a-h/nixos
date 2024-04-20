@@ -20,12 +20,22 @@
         });
 
       nixosConfigurations = {
-        remote-builder = nixpkgs.lib.nixosSystem {
+        builder-x86_64 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           specialArgs = {
             sshkey = sshkey;
           };
           modules = [
-            ./systems/remote-builder/config.nix
+            ./systems/builder/config.nix
+          ];
+        };
+        builder-aarch64 = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            sshkey = sshkey;
+          };
+          modules = [
+            ./systems/builder/config.nix
           ];
         };
       };
