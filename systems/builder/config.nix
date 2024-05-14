@@ -1,4 +1,4 @@
-{ pkgs, sshkey, ... }:
+{ pkgs, adrianSSHKey, rootSSHKey, ... }:
 
 {
   networking.hostName = "builder";
@@ -51,7 +51,10 @@
     adrian = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = [ sshkey ];
+      openssh.authorizedKeys.keys = [
+        adrianSSHKey
+        rootSSHKey
+      ];
     };
   };
 
