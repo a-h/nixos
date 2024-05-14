@@ -12,6 +12,8 @@
     pkgs.vim
     pkgs.git
     pkgs.zip
+    pkgs.unzip
+    pkgs.wget
   ];
 
   fileSystems."/" = {
@@ -34,7 +36,7 @@
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "us";
   nix.settings.trusted-users = [ "adrian" "@wheel" ];
-  nix.settings.system-features = "kvm nixos-test";
+  nix.settings.system-features = [ "kvm" "nixos-test" ];
 
   boot = {
     loader = {
