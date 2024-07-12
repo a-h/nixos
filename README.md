@@ -13,3 +13,12 @@ sudo nixos-rebuild switch --flake github:a-h/nixos#nixos-aarch64
 ```bash
 sudo nixos-rebuild switch --flake .#nixos-aarch64
 ```
+
+### start
+
+See https://ryan.himmelwright.net/post/utmctl-nearly-headless-vms/
+
+```bash
+utmctl start aarch64
+utmctl start aarch64
+```
