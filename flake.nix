@@ -16,6 +16,14 @@
       url = "github:joerdav/xc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    playdatesdk = {
+      url = "github:headblockhead/nix-playdatesdk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    playdatemirror = {
+      url = "github:headblockhead/nix-playdatemirror";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
