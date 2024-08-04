@@ -13,7 +13,7 @@
                 "picture-uri" = "file://${pkgs.nixos-artwork.wallpapers.nineish.gnomeFilePath}";
                 "picture-uri-dark" = "file://${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
               };
-              "/org/gnome/desktop/input-sources" = {
+              "org/gnome/desktop/input-sources" = {
                 xkb-options = [ "terminate:ctrl_alt_bksp" "lv3:ralt_switch" "compose:rctrl" ];
               };
               "org/gnome/nautilus/list-view" = {
