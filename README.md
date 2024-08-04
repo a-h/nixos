@@ -1,24 +1,33 @@
-# NixOS
+# nixos
+
+Reproducable configuration for various devices.
 
 ## Tasks
 
-### nixos-switch-aarch64
+### Switch-system
 
-```
-sudo nixos-rebuild switch --flake github:a-h/nixos#nixos-aarch64
-```
+Requires: switch-nixos, switch-home-manager
 
-### nixos-switch-aarch64-local
+Rebuilds NixOS and home-manager and applies all configration changes.
 
-```bash
-sudo nixos-rebuild switch --flake .#nixos-aarch64
-```
+### Switch-NixOS
 
-### start
-
-See https://ryan.himmelwright.net/post/utmctl-nearly-headless-vms/
+Rebuilds the system-wide NixOS configuration and applies it.
 
 ```bash
-utmctl start aarch64
-utmctl start aarch64
+sudo nixos-rebuild switch --flake ".#`hostname`"
+```
+
+### Switch-home-manager
+
+Rebuilds the home directory of the user and applies it.
+
+```bash
+home-manager switch --flake ".#$USER@`hostname`"
+```
+
+### Garbage-collect
+
+```bash
+nix-collect-garbage --quiet
 ```
