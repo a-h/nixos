@@ -23,7 +23,6 @@
     sound
     ssd
     users
-    virtualBox
     zsh
   ];
 
