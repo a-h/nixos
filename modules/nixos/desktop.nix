@@ -180,7 +180,7 @@
 
   # Install fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "BlexMono" ]; })
+    (nerdfonts.override { fonts = [ "IBMPlexMono" ]; })
   ];
 
 }
