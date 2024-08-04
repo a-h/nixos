@@ -34,13 +34,6 @@
     pkgs.d2 # Diagramming
     pkgs.upterm
     pkgs.xc # Task executor.
-    # Java development.
-    pkgs.jdk # Development.
-    #BROKE pkgs.openjdk17 # Development.
-    pkgs.jre # Runtime.
-    pkgs.gradle # Build tool.
-    pkgs.jdt-language-server # Language server.
-    pkgs.maven
     # Other.
     pkgs.aerc
     pkgs.aha # Converts shell output to HTML.
@@ -78,7 +71,6 @@
     pkgs.go-swagger
     pkgs.gomuks
     pkgs.gotools
-    pkgs.google-cloud-sdk # No Darwin ARM support.
     pkgs.gopls
     pkgs.graphviz
     pkgs.html2text
@@ -102,7 +94,6 @@
     pkgs.nixpkgs-fmt
     pkgs.nix-prefetch-git
     pkgs.nmap
-    pkgs.nodePackages.node2nix
     pkgs.nodePackages.prettier
     #pkgs.nodePackages.typescript
     #pkgs.nodePackages.typescript-language-server
@@ -118,9 +109,6 @@
     pkgs.rust-analyzer # Rust language server.
     pkgs.ssm-session-manager-plugin # No Darwin ARM support. 
     pkgs.slides
-    pkgs.terraform
-    pkgs.terraform-ls
-    pkgs.tflint
     pkgs.tmate
     pkgs.tmux
     pkgs.tree
