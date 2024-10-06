@@ -76,7 +76,7 @@
 
   # Import the QEMU VM module.
   imports = [
-    "${pkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+    ("${pkgs}/nixos/modules/virtualisation/qemu-vm.nix")
   ];
   # Enable QEMU agent so that running `utmctl ip-address <name>` from the host works.
   virtualisation.qemu.guestAgent.enable = true;
