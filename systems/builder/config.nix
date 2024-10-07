@@ -31,7 +31,6 @@
   ];
 
   documentation.nixos.enable = false;
-  boot.tmp.cleanOnBoot = true;
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "us";
@@ -39,6 +38,7 @@
   nix.settings.system-features = [ "kvm" "nixos-test" ];
 
   boot = {
+    tmp.cleanOnBoot = true;
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -48,7 +48,9 @@
         enable = true;
       };
     };
+    kernelModules = [ "kvm-amd" "kvm-intel" ];
   };
+  virtualisation.libvirtd.enable = true;
 
   users.users = {
     root.hashedPassword = "!"; # Disable root login
