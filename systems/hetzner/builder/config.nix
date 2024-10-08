@@ -32,6 +32,7 @@
   nix.settings.system-features = [ "kvm" "nixos-test" ];
 
   boot.loader.grub.enable = true;
+  bool.loader.grub.device = "/dev/disk/by-label/nixos";
   networking.networkmanager.enable = true;
 
   users.users = {
