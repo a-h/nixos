@@ -14,6 +14,16 @@
     pkgs.wget
   ];
 
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+  };
+  swapDevices = [
+    {
+      device = "/dev/disk/by-label/swap";
+    }
+  ];
+
   documentation.nixos.enable = false;
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
