@@ -4,10 +4,10 @@
   # Create a new MBR partition table
   parted /dev/sda --script mklabel msdos
 
-  # Create a 512MB boot partition with FAT32
-  parted /dev/sda --script mkpart primary fat32 1MiB 513MiB
+  # Create a 512MB boot partition with ext4
+  parted /dev/sda --script mkpart primary ext4 1MiB 513MiB
   parted /dev/sda --script set 1 boot on
-  mkfs.vfat -n boot /dev/sda1
+  mkfs.ext4 -L boot /dev/sda1
 
   # Create a swap partition of 8GB
   parted /dev/sda --script mkpart primary linux-swap 513MiB 8577MiB
@@ -42,7 +42,7 @@
   };
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
+    fsType = "ext4";
   };
   swapDevices = [
     {
