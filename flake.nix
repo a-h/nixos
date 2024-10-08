@@ -21,6 +21,16 @@
         });
 
       nixosConfigurations = {
+        hetzner-builder-x86_64 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            adrianSSHKey = adrianSSHKey;
+            rootSSHKey = rootSSHKey;
+          };
+          modules = [
+            ./systems/hetzner/builder/config.nix
+          ];
+        };
         builder-x86_64 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
@@ -28,7 +38,7 @@
             rootSSHKey = rootSSHKey;
           };
           modules = [
-            ./systems/builder/config.nix
+            ./systems/utm/builder/config.nix
           ];
         };
         builder-aarch64 = nixpkgs.lib.nixosSystem {
@@ -38,7 +48,7 @@
             rootSSHKey = rootSSHKey;
           };
           modules = [
-            ./systems/builder/config.nix
+            ./systems/utm/builder/config.nix
           ];
         };
       };
