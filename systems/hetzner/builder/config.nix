@@ -18,6 +18,11 @@
   parted /dev/sda --script mkpart primary ext4 8577MiB 100%
   mkfs.ext4 -L nixos /dev/sda3
 
+  # Mount the partitions to /mnt and /mnt/boot.
+  mount /dev/disk/by-label/nixos /mnt
+  mkdir /mnt/boot
+  mount /dev/disk/by-label/boot /mnt/boot
+
   # Install.
   sudo nixos-install --flake github:a-h/nixos#hetzner-builder-x86_64
 */
@@ -59,7 +64,7 @@
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
-  networking.networkmanager.enable = true;
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
   users.users = {
     root.hashedPassword = "!"; # Disable root login
