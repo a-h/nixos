@@ -1,5 +1,7 @@
 # NixOS
 
+If you're making a lot of changes, skip the cache by adding the `--refresh` flag.
+
 ## Tasks
 
 ### nixos-switch-aarch64

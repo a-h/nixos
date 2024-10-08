@@ -1,5 +1,23 @@
 { pkgs, adrianSSHKey, rootSSHKey, ... }:
 
+/*
+  # Create a new MBR partition table
+  parted /dev/sda --script mklabel msdos
+
+  # Create a 512MB boot partition with FAT32
+  parted /dev/sda --script mkpart primary fat32 1MiB 513MiB
+  parted /dev/sda --script set 1 boot on
+  mkfs.vfat -n boot /dev/sda1
+
+  # Create a swap partition of 8GB
+  parted /dev/sda --script mkpart primary linux-swap 513MiB 8577MiB
+  mkswap -L swap /dev/sda2
+
+  # Create a root partition using the rest of the disk with ext4
+  parted /dev/sda --script mkpart primary ext4 8577MiB 100%
+  mkfs.ext4 -L nixos /dev/sda3
+*/
+
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -17,6 +35,10 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "vfat";
   };
   swapDevices = [
     {
