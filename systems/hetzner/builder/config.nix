@@ -25,11 +25,21 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-builder-x86_64
 */
 { pkgs, adrianSSHKey, rootSSHKey, ... }:
+let
+  modprobe-blacklist = pkgs.writeText "/etc/modprobe.d/cramfs.conf" ''
+    install cramfs /bin/false
+  '';
+in
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
   };
+
+  # Create a symlink from /bin/true to the Nix-managed true binary.
+  # Required by modprobe-blacklist.
+  environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
+  environment.etc."bin/false".source = "${pkgs.coreutils}/bin/false";
 
   environment.systemPackages = [
     pkgs.vim
@@ -37,6 +47,7 @@
     pkgs.zip
     pkgs.unzip
     pkgs.wget
+    modprobe-blacklist
   ];
 
   fileSystems."/" = {
@@ -100,7 +111,6 @@
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
-    # CIS 5.2.4 - Ensure SSH Protocol is set to 2
     # CIS 5.2 SSH Server Configuration
     extraConfig = ''
       Protocol 2
