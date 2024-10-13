@@ -25,11 +25,6 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-builder-x86_64
 */
 { pkgs, adrianSSHKey, rootSSHKey, ... }:
-let
-  modprobe-blacklist = pkgs.writeText "/etc/modprobe.d/cramfs.conf" ''
-    install cramfs /bin/false
-  '';
-in
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -37,9 +32,10 @@ in
   };
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
-  # Required by modprobe-blacklist.
-  environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
   environment.etc."bin/false".source = "${pkgs.coreutils}/bin/false";
+  environment.etc."modprobe.d/cramfs.conf".text = ''
+    install cramfs /bin/false
+  '';
 
   environment.systemPackages = [
     pkgs.vim
@@ -47,7 +43,6 @@ in
     pkgs.zip
     pkgs.unzip
     pkgs.wget
-    modprobe-blacklist
   ];
 
   fileSystems."/" = {
