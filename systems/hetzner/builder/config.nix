@@ -51,7 +51,6 @@
     device = "tmpfs";
     fsType = "tmpfs";
     options = [ "rw" "nosuid" "noexec" "relatime" ];
-    size = "2G";
   };
   swapDevices = [
     {
