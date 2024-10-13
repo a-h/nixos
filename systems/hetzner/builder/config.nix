@@ -29,7 +29,7 @@
 
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/hardened.nix>
+    "${pkgs.path}/nixos/modules/profiles/hardened.nix"
   ];
 
   nix.settings = {
