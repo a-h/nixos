@@ -18,6 +18,9 @@
           };
           modules = [
             ./systems/hetzner/builder/config.nix
+            {
+              imports = [ "${nixpkgs}/nixos/profiles/hardened.nix" ];
+            }
           ];
         };
         builder-x86_64 = nixpkgs.lib.nixosSystem {
