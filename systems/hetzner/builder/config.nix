@@ -47,6 +47,12 @@
     device = "/dev/disk/by-label/boot";
     fsType = "ext4";
   };
+  fileSystems."/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "rw" "nosuid" "noexec" "relatime" ];
+    size = "2G";
+  };
   swapDevices = [
     {
       device = "/dev/disk/by-label/swap";
