@@ -24,13 +24,10 @@
   # Install.
   sudo nixos-install --flake github:a-h/nixos#hetzner-builder-x86_64
 */
-{ nixpkgs, system, adrianSSHKey, rootSSHKey, ... }:
-let
-  pkgs = import nixpkgs { inherit system; };
-in
+{ pkgs, adrianSSHKey, rootSSHKey, ... }:
 {
   imports = [
-    "${nixpkgs}/nixos/modules/profiles/hardened.nix"
+    "${pkgs.path}/nixos/modules/profiles/hardened.nix"
   ];
 
   nix.settings = {
