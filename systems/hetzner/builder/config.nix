@@ -1,4 +1,4 @@
-{ pkgs, adrianSSHKey, rootSSHKey, ... }:
+{ nixpkgs, pkgs, adrianSSHKey, rootSSHKey, ... }:
 
 /*
   # Create a new MBR partition table
@@ -29,7 +29,7 @@
 
 {
   imports = [
-    "${pkgs.path}/nixos/modules/profiles/hardened.nix"
+    "${nixpkgs}/nixos/modules/profiles/hardened.nix"
   ];
 
   nix.settings = {
