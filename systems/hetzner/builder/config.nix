@@ -47,6 +47,7 @@
     device = "/dev/disk/by-label/boot";
     fsType = "ext4";
   };
+  # CIS 1.1.2.a - Ensure /tmp is configured
   fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
@@ -70,8 +71,7 @@
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
   boot.kernel.sysctl = {
-    # Disable IPv6 router advertisements.
-    # As per CIS 3.2.9.a
+    # CIS 3.2.9.a - Disable IPv6 Router Advertisements
     "net.ipv6.conf.all.accept_ra" = 0;
     "net.ipv6.conf.default.accept_ra" = 0;
   };
@@ -87,6 +87,9 @@
       ];
     };
   };
+
+  # CIS 1.5.1.a - Ensure core dumps are restricted
+  systemd.coredump.enable = false;
 
   security.sudo.wheelNeedsPassword = false;
 
