@@ -100,6 +100,16 @@
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
+    # CIS 5.2.4 - Ensure SSH Protocol is set to 2
+    # CIS 5.2 SSH Server Configuration
+    extraConfig = ''
+      Protocol 2
+      MaxAuthTries 4
+      PermitEmptyPasswords no
+      PermitUserEnvironment no
+      MaxSessions 4
+      LoginGraceTime 60
+    '';
   };
   networking.firewall.allowedTCPPorts = [ 22 ];
 
