@@ -64,6 +64,13 @@
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
 
+  boot.kernel.sysctl = {
+    # Disable IPv6 router advertisements.
+    # As per CIS 3.2.9.a
+    "net.ipv6.conf.all.accept_ra" = 0;
+    "net.ipv6.conf.default.accept_ra" = 0;
+  };
+
   users.users = {
     root.hashedPassword = "!"; # Disable root login
     adrian = {
