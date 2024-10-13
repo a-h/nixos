@@ -32,9 +32,38 @@
   };
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
-  environment.etc."bin/false".source = "${pkgs.coreutils}/bin/false";
+  environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
+  # CIS 1.1.1.1.a Ensure mounting of cramfs filesystems is disabled
   environment.etc."modprobe.d/cramfs.conf".text = ''
-    install cramfs /bin/false
+    install cramfs /bin/true
+  '';
+  # CIS 1.1.1.2.a Ensure mounting of freevxfs filesystems is disabled
+  environment.etc."modprobe.d/freevxfs.conf".text = ''
+    install freevxfs /bin/true
+  '';
+  # CIS 1.1.1.3.a Ensure mounting of jffs2 filesystems is disabled
+  environment.etc."modprobe.d/jffs2.conf".text = ''
+    install jffs2 /bin/true
+  '';
+  # CIS 1.1.1.4.a Ensure mounting of hfs filesystems is disabled
+  environment.etc."modprobe.d/hfs.conf".text = ''
+    install hfs /bin/true
+  '';
+  # CIS 1.1.1.5.a Ensure mounting of hfsplus filesystems is disabled
+  environment.etc."modprobe.d/hfsplus.conf".text = ''
+    install hfsplus /bin/true
+  '';
+  # CIS 1.1.1.6.a Ensure mounting of squashfs filesystems is disabled
+  environment.etc."modprobe.d/squashfs.conf".text = ''
+    install squashfs /bin/true
+  '';
+  # CIS 1.1.1.7.a Ensure mounting of udf filesystems is disabled
+  environment.etc."modprobe.d/udf.conf".text = ''
+    install udf /bin/true
+  '';
+  # CIS 1.1.1.8.a Ensure mounting of FAT filesystems is disabled
+  environment.etc."modprobe.d/fat.conf".text = ''
+    install fat /bin/true
   '';
 
   environment.systemPackages = [
