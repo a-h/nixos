@@ -19,7 +19,7 @@
           modules = [
             ./systems/hetzner/builder/config.nix
             {
-              imports = [ "${nixpkgs}/nixos/profiles/hardened.nix" ];
+              imports = [ "${nixpkgs}/nixos/modules/profiles/hardened.nix" ];
             }
           ];
         };
