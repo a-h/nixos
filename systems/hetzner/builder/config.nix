@@ -50,7 +50,7 @@
   fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
-    options = [ "rw" "nosuid" "noexec" "relatime" ];
+    options = [ "rw" "nosuid" "nodev" "noexec" "relatime" ];
   };
   swapDevices = [
     {
