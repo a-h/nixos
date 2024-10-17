@@ -31,6 +31,9 @@
     auto-optimise-store = true;
   };
 
+  # Enable virtualisation.
+  virtualisation.libvirtd.enable = true;
+
   # Create a symlink from /bin/true to the Nix-managed true binary.
   environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
   # CIS 1.1.1.1.a Ensure mounting of cramfs filesystems is disabled
