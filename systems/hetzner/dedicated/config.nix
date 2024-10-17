@@ -130,6 +130,10 @@
     "net.ipv6.conf.default.accept_ra" = 0;
   };
 
+  services.udev.extraRules = ''
+    KERNEL=="kvm", GROUP="kvm", MODE="0660"
+  '';
+
   users.users = {
     root.hashedPassword = "!"; # Disable root login
     adrian = {
