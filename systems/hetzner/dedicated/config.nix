@@ -37,7 +37,7 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ pkgs, adrianSSHKey, rootSSHKey, ... }:
+{ lib, pkgs, adrianSSHKey, rootSSHKey, ... }:
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -48,6 +48,7 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  users.groups.kvm.members = lib.map (i: "nixbld${toString i}") (lib.range 1 30);
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
   environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
