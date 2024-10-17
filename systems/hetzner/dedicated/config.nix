@@ -37,7 +37,7 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ lib, pkgs, adrianSSHKey, rootSSHKey, ... }:
+{ pkgs, adrianSSHKey, rootSSHKey, ... }:
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -48,7 +48,6 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
-  users.groups.kvm.members = lib.map (i: "nixbld${toString i}") (lib.range 1 30);
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
   environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
@@ -118,7 +117,6 @@
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "us";
   nix.settings.trusted-users = [ "adrian" "@wheel" ];
-  nix.settings.system-features = [ "kvm" "nixos-test" ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/nvme0n1";
@@ -129,10 +127,6 @@
     "net.ipv6.conf.all.accept_ra" = 0;
     "net.ipv6.conf.default.accept_ra" = 0;
   };
-
-  services.udev.extraRules = ''
-    KERNEL=="kvm", GROUP="kvm", MODE="0660"
-  '';
 
   users.users = {
     root.hashedPassword = "!"; # Disable root login
