@@ -23,6 +23,19 @@
             }
           ];
         };
+        hetzner-dedicated-x86_64 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            adrianSSHKey = adrianSSHKey;
+            rootSSHKey = rootSSHKey;
+          };
+          modules = [
+            ./systems/hetzner/dedicated/config.nix
+            {
+              imports = [ "${nixpkgs}/nixos/modules/profiles/hardened.nix" ];
+            }
+          ];
+        };
         builder-x86_64 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
