@@ -34,6 +34,7 @@
   # Enable virtualisation.
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
   environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
