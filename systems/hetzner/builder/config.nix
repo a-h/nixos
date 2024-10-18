@@ -87,12 +87,6 @@
     device = "/dev/disk/by-label/boot";
     fsType = "ext4";
   };
-  # CIS 1.1.2.a - Ensure /tmp is configured
-  fileSystems."/tmp" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-    options = [ "rw" "nosuid" "nodev" "noexec" "relatime" ];
-  };
   swapDevices = [
     {
       device = "/dev/disk/by-label/swap";
