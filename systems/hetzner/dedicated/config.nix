@@ -48,6 +48,8 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  # Enable this system to cross-compile for aarch64-linux using kvm.
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # Create a symlink from /bin/true to the Nix-managed true binary.
   environment.etc."bin/true".source = "${pkgs.coreutils}/bin/true";
