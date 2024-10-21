@@ -18,7 +18,7 @@
 
   # Mount the partitions to /mnt and /mnt/boot.
   mount /dev/disk/by-label/nixos /mnt
-  mkdir /mnt/boot
+  mkdir -p /mnt/boot
   mount /dev/disk/by-label/boot /mnt/boot
 
   # Install.

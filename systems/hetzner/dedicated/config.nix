@@ -30,7 +30,7 @@
 
   # Mount the partitions to /mnt and /mnt/boot.
   mount /dev/disk/by-label/nixos /mnt
-  mkdir /mnt/boot
+  mkdir -p /mnt/boot
   mount /dev/disk/by-label/boot /mnt/boot
 
   # Install.
@@ -106,7 +106,7 @@
   fileSystems."/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
-    options = [ "rw" "nosuid" "nodev" "noexec" "relatime" ];
+    options = [ "rw" "nosuid" "nodev" "relatime" ];
   };
   swapDevices = [
     {
