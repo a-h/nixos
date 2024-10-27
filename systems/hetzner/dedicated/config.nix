@@ -170,7 +170,7 @@
     allowedTCPPorts = [ 22 ];
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
-    networking.firewall.extraCommands = ''
+    extraCommands = ''
       iptables -A INPUT -p udp --source 127.0.0.1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p udp --source ::1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
