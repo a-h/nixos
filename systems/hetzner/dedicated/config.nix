@@ -166,6 +166,14 @@
   };
   networking.firewall.allowedTCPPorts = [ 22 ];
 
+  services.nebula.networks.mesh = {
+    enable = true;
+    isLighthouse = true;
+    cert = "/etc/nebula/lighthouse.adrianhesketh.com.crt";
+    key = "/etc/nebula/lighthouse.adrianhesketh.com.key";
+    ca = "/etc/nebula/ca.crt";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
