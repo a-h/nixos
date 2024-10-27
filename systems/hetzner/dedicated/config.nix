@@ -169,6 +169,7 @@
   services.nebula.networks.mesh = {
     enable = true;
     isLighthouse = true;
+    isRelay = true; # Allow other nodes to connect to this node.
     cert = "/etc/nebula/lighthouse.adrianhesketh.com.crt";
     key = "/etc/nebula/lighthouse.adrianhesketh.com.key";
     ca = "/etc/nebula/ca.crt";
