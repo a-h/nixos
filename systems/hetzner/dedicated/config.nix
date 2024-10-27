@@ -169,23 +169,15 @@
     # Allow SSH from anywhere.
     allowedTCPPorts = [ 22 ];
 
-    # Allow Lighthouse to relay to apps running on port 4343 this server.
-    rules = {
-      "allow-4343-from-localhost-tcp" = {
-        description = "Allow TCP port 4343 from localhost only";
-        protocol = "tcp";
-        sourceAddress = [ "127.0.0.1" "::1" ];
-        destinationPort = 4343;
-        action = "accept";
-      };
-      "allow-4343-localhost-udp" = {
-        description = "Allow UDP port 4343 from localhost only";
-        protocol = "udp";
-        sourceAddress = [ "127.0.0.1" "::1" ];
-        destinationPort = 4343;
-        action = "accept";
-      };
-    };
+    # Allow port 4343 from localhost, and from the lighthouse server on the local network.
+    networking.firewall.extraCommands = ''
+      iptables -A INPUT -p udp --source 127.0.0.1 --dport 4343 -j ACCEPT
+      iptables -A INPUT -p udp --source ::1 --dport 4343 -j ACCEPT
+      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
+      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 4343 -j ACCEPT
+      iptables -A INPUT -p tcp --source ::1 --dport 4343 -j ACCEPT
+      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
+    '';
   };
 
   services.nebula.networks.mesh = {
