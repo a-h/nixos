@@ -167,7 +167,7 @@
 
   networking.firewall = {
     # Allow SSH from anywhere.
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 8080 ];
     # Allow an app to listen on port 4343 behind nebula.
     allowedUDPPorts = [ 4343 ];
 
@@ -177,9 +177,6 @@
       iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p tcp --source 127.0.0.1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
-      # Enable Nebula to connect to the local app running on port 8080.
-      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 8080 -j ACCEPT
-      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 8080 -j ACCEPT
     '';
   };
 
