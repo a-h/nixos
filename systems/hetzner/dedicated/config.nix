@@ -188,9 +188,12 @@
     key = "/etc/nebula/lighthouse.adrianhesketh.com.key";
     ca = "/etc/nebula/ca.crt";
     settings = {
-      lighthouse.dns = {
-        host = "0.0.0.0";
-        port = 53;
+      lighthouse = {
+        serve_dns = true;
+        dns = {
+          host = "192.168.100.1";
+          port = 53;
+        };
       };
     };
     firewall = {
