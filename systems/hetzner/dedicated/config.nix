@@ -184,6 +184,12 @@
     cert = "/etc/nebula/lighthouse.adrianhesketh.com.crt";
     key = "/etc/nebula/lighthouse.adrianhesketh.com.key";
     ca = "/etc/nebula/ca.crt";
+    settings = {
+      lighthouse.dns = {
+        host = "192.168.100.1";
+        port = 53;
+      };
+    };
   };
 
   # This value determines the NixOS release from which the default
