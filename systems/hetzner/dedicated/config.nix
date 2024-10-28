@@ -168,6 +168,7 @@
   networking.firewall = {
     # Allow SSH from anywhere.
     allowedTCPPorts = [ 22 ];
+    allowedUDPPorts = [ 53 ];
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
     extraCommands = ''
@@ -191,7 +192,7 @@
       lighthouse = {
         serve_dns = true;
         dns = {
-          host = "192.168.100.1";
+          host = "0.0.0.0";
           port = 53;
         };
       };
@@ -202,7 +203,7 @@
         {
           port = 53;
           proto = "udp";
-          group = "any";
+          host = "any";
         }
       ];
       outbound = [
