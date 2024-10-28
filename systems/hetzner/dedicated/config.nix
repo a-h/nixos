@@ -174,6 +174,8 @@
       # Allow any traffic from the lighthouse network subnet (192.168.100.0/24)
       # Nebula has its own rules, so we don't need to worry about that here.
       iptables -A INPUT -p tcp --source 192.168.100.0/24 -j ACCEPT
+      # Allow port 53 UDP from the lightouse network subnet.
+      iptables -A INPUT -p udp --source 192.168.100.0/24 --dport 53 -j ACCEPT
     '';
   };
 
