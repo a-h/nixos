@@ -202,7 +202,7 @@
       outbound = [
         # Allow all outbound traffic from this node, so that DNS responses can be sent.
         {
-          port = 0;
+          port = "any";
           proto = "any";
           host = "any";
         }
