@@ -37,7 +37,7 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ pkgs, adrianSSHKey, rootSSHKey, ... }:
+{ pkgs, lib, adrianSSHKey, rootSSHKey, ... }:
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -183,8 +183,8 @@
     '';
   };
 
-  systemd.services."nebula@mesh.service".serviceConfig.CapabilityBoundingSet = "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
-  systemd.services."nebula@mesh.service".serviceConfig.AmbientCapabilities = "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
+  systemd.services."nebula@mesh.service".serviceConfig.CapabilityBoundingSet = lib.mkForce "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
+  systemd.services."nebula@mesh.service".serviceConfig.AmbientCapabilities = lib.mkForce "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
   services.nebula.networks.mesh = {
     enable = true;
     isLighthouse = true;
