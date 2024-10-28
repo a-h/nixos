@@ -170,6 +170,7 @@
   networking.firewall = {
     # Allow SSH from anywhere.
     allowedTCPPorts = [ 22 ];
+    allowedUDPPorts = [ 4242 ]; # Nebula.
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
     extraCommands = ''
