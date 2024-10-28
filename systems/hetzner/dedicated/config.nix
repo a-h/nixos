@@ -167,7 +167,7 @@
 
   networking.firewall = {
     # Allow SSH from anywhere.
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 53 ];
     allowedUDPPorts = [ 53 ];
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
@@ -178,6 +178,8 @@
       # Allow port 53 UDP from the lightouse network subnet and localhost.
       iptables -A INPUT -p udp --source 192.168.100.0/24 --dport 53 -j ACCEPT
       iptables -A INPUT -p udp --source 127.0.0.1 --dport 53 -j ACCEPT
+      iptables -A INPUT -p tcp --source 192.168.100.0/24 --dport 53 -j ACCEPT
+      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 53 -j ACCEPT
     '';
   };
 
@@ -209,6 +211,11 @@
         {
           port = 53;
           proto = "udp";
+          host = "any";
+        }
+        {
+          port = 53;
+          proto = "tcp";
           host = "any";
         }
       ];
