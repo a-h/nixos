@@ -199,6 +199,12 @@
     };
     firewall = {
       inbound = [
+        # Allow ping from anywhere.
+        {
+          port = "any";
+          proto = "icmp";
+          host = "any";
+        }
         # Enable any host on the Nebula network to use this node as a DNS server.
         {
           port = 53;
@@ -207,7 +213,7 @@
         }
       ];
       outbound = [
-        # Allow all outbound traffic from this node, so that DNS responses can be sent.
+        # Allow all outbound traffic from this node.
         {
           port = "any";
           proto = "any";
