@@ -199,6 +199,14 @@
           group = "any";
         }
       ];
+      outbound = [
+        # Allow all outbound traffic from this node, so that DNS responses can be sent.
+        {
+          port = 0;
+          proto = "any";
+          host = "any";
+        }
+      ];
     };
   };
 
