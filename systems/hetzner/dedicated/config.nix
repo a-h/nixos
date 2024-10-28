@@ -183,6 +183,8 @@
     '';
   };
 
+  systemd.services."nebula@mesh.service".serviceConfig.CapabilityBoundingSet = "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
+  systemd.services."nebula@mesh.service".serviceConfig.AmbientCapabilities = "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
   services.nebula.networks.mesh = {
     enable = true;
     isLighthouse = true;
