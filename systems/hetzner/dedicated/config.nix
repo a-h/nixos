@@ -177,6 +177,9 @@
       iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p tcp --source 127.0.0.1 --dport 4343 -j ACCEPT
       iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
+      # Enable Nebula to connect to the local app running on port 8080.
+      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 8080 -j ACCEPT
+      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 8080 -j ACCEPT
     '';
   };
 
