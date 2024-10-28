@@ -87,11 +87,12 @@
   '';
 
   environment.systemPackages = [
-    pkgs.vim
     pkgs.git
-    pkgs.zip
+    pkgs.tmux
     pkgs.unzip
+    pkgs.vim
     pkgs.wget
+    pkgs.zip
   ];
 
   fileSystems."/" = {
@@ -177,8 +178,6 @@
       # Allow port 53 UDP from the lightouse network subnet and localhost.
       iptables -A INPUT -p udp --source 192.168.100.0/24 --dport 53 -j ACCEPT
       iptables -A INPUT -p udp --source 127.0.0.1 --dport 53 -j ACCEPT
-      iptables -A INPUT -p tcp --source 192.168.100.0/24 --dport 53 -j ACCEPT
-      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 53 -j ACCEPT
     '';
   };
 
