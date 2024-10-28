@@ -168,8 +168,6 @@
   networking.firewall = {
     # Allow SSH from anywhere.
     allowedTCPPorts = [ 22 ];
-    # Allow an app to listen on port 4343 behind nebula.
-    allowedUDPPorts = [ 4343 ];
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
     extraCommands = ''
