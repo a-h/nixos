@@ -195,7 +195,7 @@
       lighthouse = {
         serve_dns = true;
         dns = {
-          host = "0.0.0.0";
+          host = "192.168.100.1";
           port = 53;
         };
       };
