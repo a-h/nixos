@@ -189,7 +189,7 @@
     ca = "/etc/nebula/ca.crt";
     settings = {
       lighthouse.dns = {
-        host = "192.168.100.1";
+        host = "0.0.0.0";
         port = 53;
       };
     };
