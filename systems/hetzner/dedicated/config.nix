@@ -167,16 +167,15 @@
 
   networking.firewall = {
     # Allow SSH from anywhere.
-    allowedTCPPorts = [ 22 8080 ];
+    allowedTCPPorts = [ 22 ];
     # Allow an app to listen on port 4343 behind nebula.
     allowedUDPPorts = [ 4343 ];
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
     extraCommands = ''
-      iptables -A INPUT -p udp --source 127.0.0.1 --dport 4343 -j ACCEPT
-      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
-      iptables -A INPUT -p tcp --source 127.0.0.1 --dport 4343 -j ACCEPT
-      iptables -A INPUT -p tcp --source 192.168.100.1 --dport 4343 -j ACCEPT
+      # Allow any traffic from the lighthouse network subnet (192.168.100.0/24)
+      # Nebula has its own rules, so we don't need to worry about that here.
+      iptables -A INPUT -p tcp --source 192.168.100.0/24 -j ACCEPT
     '';
   };
 
