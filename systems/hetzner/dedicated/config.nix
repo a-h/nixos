@@ -190,6 +190,16 @@
         port = 53;
       };
     };
+    firewall = {
+      inbound = [
+        # Enable any host on the Nebula network to use this node as a DNS server.
+        {
+          port = 53;
+          proto = "udp";
+          group = "any";
+        }
+      ];
+    };
   };
 
   # This value determines the NixOS release from which the default
