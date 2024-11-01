@@ -256,7 +256,7 @@
   services.minio = {
     enable = true;
     configDir = "/mnt/secrets/minio";
-    dataDir = "/mnt/storage/minio";
+    dataDir = [ "/mnt/storage/minio" ];
     listenAddress = ":9000";
     consoleAddress = ":9001";
   };
