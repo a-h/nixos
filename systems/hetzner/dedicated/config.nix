@@ -257,8 +257,8 @@
     enable = true;
     configDir = "/mnt/secrets/minio";
     dataDir = [ "/mnt/storage/minio" ];
-    listenAddress = ":9000";
-    consoleAddress = ":9001";
+    listenAddress = "localhost:9000";
+    consoleAddress = "localhost:9001";
   };
 
   services.nginx = {
@@ -271,14 +271,14 @@
     #};
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
-      forceSSL = true;
+      #forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
-    #virtualHosts."minio.adrianhesketh.com" = {
-    #enableACME = true;
-    #forceSSL = true;
-    #locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
-    #};
+    virtualHosts."minio.adrianhesketh.com" = {
+      enableACME = true;
+      #forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
+    };
   };
 
   security.acme = {
@@ -286,7 +286,7 @@
     certs = {
       "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
       #"minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
-      #"minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
+      "minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };
   };
 
