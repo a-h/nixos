@@ -248,6 +248,7 @@
 
   services.nix-serve = {
     enable = true;
+    package = pkgs.nix-serve-ng;
     secretKeyFile = "/mnt/secrets/nix-serve/cache-private-key.pem";
   };
 
