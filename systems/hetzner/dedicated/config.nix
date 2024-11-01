@@ -24,8 +24,12 @@
   mkswap -L swap /dev/nvme0n1p2
   swapon /dev/nvme0n1p2
 
+  # Create a 1GB partition for secrets / config.
+  parted /dev/nvme0n1 --script mkpart primary ext4 8577MiB 9577MiB
+  mkfs.ext4 -L secrets /dev/nvme0n1p3
+  
   # Create a root partition with the remaining space
-  parted /dev/nvme0n1 --script mkpart primary ext4 8577MiB 100%
+  parted /dev/nvme0n1 --script mkpart primary ext4 9577MiB 100%
   mkfs.ext4 -L nixos /dev/nvme0n1p3
 
   # Mount the partitions to /mnt and /mnt/boot.
@@ -103,6 +107,14 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/boot";
     fsType = "ext4";
+  };
+  fileSystems."/mnt/secrets" = {
+    device = "/dev/disk/by-label/secrets";
+    options = [ "nofail" ];
+  };
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-label/storage";
+    options = [ "nofail" ];
   };
   # CIS 1.1.2.a - Ensure /tmp is configured
   fileSystems."/tmp" = {
