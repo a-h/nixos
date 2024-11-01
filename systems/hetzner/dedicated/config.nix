@@ -182,6 +182,7 @@
   networking.firewall = {
     allowedTCPPorts = [
       22 # SSH
+      80 # For ACME challenges
       443 # HTTPS for cache.adrianhesketh.com
     ];
     allowedUDPPorts = [ 4242 ]; # Nebula.
