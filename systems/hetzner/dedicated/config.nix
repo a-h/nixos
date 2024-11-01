@@ -264,28 +264,28 @@
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
-    virtualHosts."minio-console.adrianhesketh.com" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
-    };
+    #virtualHosts."minio-console.adrianhesketh.com" = {
+    #enableACME = true;
+    #forceSSL = true;
+    #locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
+    #};
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
       forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
-    virtualHosts."minio.adrianhesketh.com" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
-    };
+    #virtualHosts."minio.adrianhesketh.com" = {
+    #enableACME = true;
+    #forceSSL = true;
+    #locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
+    #};
   };
 
   security.acme = {
     acceptTerms = true;
     certs = {
       "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
-      "minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
+      #"minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
       "minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };
   };
