@@ -41,7 +41,7 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ pkgs, lib, adrianSSHKey, rootSSHKey, ... }:
+{ pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
 {
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -180,8 +180,10 @@
   };
 
   networking.firewall = {
-    # Allow SSH from anywhere.
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [
+      22 # SSH
+      443 # HTTPS for cache.adrianhesketh.com
+    ];
     allowedUDPPorts = [ 4242 ]; # Nebula.
 
     # Allow port 4343 from localhost, and from the lighthouse server on the local network.
@@ -241,6 +243,28 @@
           host = "any";
         }
       ];
+    };
+  };
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/mnt/secrets/nix-serve/cache-private-key.pem";
+  };
+
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts."cache.adrianhesketh.com" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+    };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    certs = {
+      "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };
   };
 
