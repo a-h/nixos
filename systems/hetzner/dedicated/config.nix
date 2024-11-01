@@ -253,13 +253,31 @@
     secretKeyFile = "/mnt/secrets/nix-serve/cache-private-key.pem";
   };
 
+  services.minio = {
+    enable = true;
+    configDir = "/mnt/secrets/minio";
+    dataDir = "/mnt/storage/minio";
+    listenAddress = ":9000";
+    consoleAddress = ":9001";
+  };
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
+    virtualHosts."minio-console.adrianhesketh.com" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
+    };
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
+    };
+    virtualHosts."minio.adrianhesketh.com" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
   };
 
@@ -267,6 +285,8 @@
     acceptTerms = true;
     certs = {
       "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
+      "minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
+      "minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };
   };
 
