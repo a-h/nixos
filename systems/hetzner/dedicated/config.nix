@@ -264,11 +264,12 @@
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
-    #virtualHosts."minio-console.adrianhesketh.com" = {
-    #enableACME = true;
-    #forceSSL = true;
-    #locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
-    #};
+    # When adding a new host, don't force SSL until the certificate has been generated.
+    virtualHosts."minio-console.adrianhesketh.com" = {
+      enableACME = true;
+      #forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
+    };
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
       #forceSSL = true;
@@ -285,7 +286,7 @@
     acceptTerms = true;
     certs = {
       "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
-      #"minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
+      "minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
       "minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };
   };
