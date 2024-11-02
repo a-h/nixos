@@ -275,8 +275,10 @@
     virtualHosts."minio-console.adrianhesketh.com" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
-      proxyWebsockets = true;
+      locations."/" = {
+        proxyPass = "http://${config.services.minio.consoleAddress}";
+        proxyWebsockets = true;
+      };
     };
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
