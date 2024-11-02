@@ -257,6 +257,7 @@
     enable = true;
     configDir = "/mnt/secrets/minio";
     dataDir = [ "/mnt/storage/minio" ];
+    rootCredentialsFile = "/mnt/secrets/minio/minio-root-credentials";
     listenAddress = "localhost:9000";
     consoleAddress = "localhost:9001";
   };
