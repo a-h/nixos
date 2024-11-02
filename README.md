@@ -94,7 +94,11 @@ cat <<EOF > ~/.aws/config
 [profile minio-adrianhesketh-com]
 region = us-east-1
 output = json
+# The endpoint is the URL of the MinIO server, but this is, sadly, ignored by the Nix tools, and you have to specify it in the store path.
 endpoint_url = https://minio.adrianhesketh.com
+EOF
+cat <<EOF > ~/.aws/credentials
+[minio-adrianhesketh-com]
 aws_access_key_id=$ACCESS_KEY
 aws_secret_access_key=$SECRET_KEY
 EOF
@@ -114,8 +118,24 @@ aws s3 --profile minio-adrianhesketh-com ls
 aws s3 --profile minio-adrianhesketh-com ls s3://nix-cache
 ```
 
-### minio-nix-cache-push
+### minio-nix-cache-test-cp
 
 ```bash
-nix copy --to 's3://nix-cache?profile=minio-adrianhesketh-com&scheme=https&endpoint=minio.adrianhesketh.com' .#devShells.x86_64-linux.default
+aws s3 --profile minio-adrianhesketh-com cp ./README.md s3://nix-cache/README.md
+```
+
+### minio-nix-cache-ping
+
+Add `-vvvv` for verbose output.
+
+```bash
+nix store info --store 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=minio.adrianhesketh.com'
+```
+
+### minio-nix-cache-push
+
+Add `-vvvv` for verbose output.
+
+```bash
+nix copy --to 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=minio.adrianhesketh.com' .#devShells.x86_64-linux.default
 ```
