@@ -264,12 +264,19 @@
 
   services.nginx = {
     enable = true;
+
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
     recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
     # When adding a new host, don't force SSL until the certificate has been generated.
+    # Enable web sockets for the Minio console.
     virtualHosts."minio-console.adrianhesketh.com" = {
       enableACME = true;
       forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
+      proxyWebSockets = true;
     };
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
