@@ -267,17 +267,17 @@
     # When adding a new host, don't force SSL until the certificate has been generated.
     virtualHosts."minio-console.adrianhesketh.com" = {
       enableACME = true;
-      #forceSSL = true;
+      forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.consoleAddress}";
     };
     virtualHosts."cache.adrianhesketh.com" = {
       enableACME = true;
-      #forceSSL = true;
+      forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
     virtualHosts."minio.adrianhesketh.com" = {
       enableACME = true;
-      #forceSSL = true;
+      forceSSL = true;
       locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
   };
