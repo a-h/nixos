@@ -278,24 +278,28 @@
       locations."/" = {
         proxyPass = "http://${config.services.minio.consoleAddress}";
         proxyWebsockets = true;
+        # Allow large uploads to Minio.
+        extraConfig = ''
+          client_max_body_size 0;
+        '';
       };
-    };
-    virtualHosts."cache.adrianhesketh.com" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
     };
     virtualHosts."minio.adrianhesketh.com" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.minio.listenAddress}";
+      locations."/" = {
+        proxyPass = "http://${config.services.minio.listenAddress}";
+        # Allow large uploads to Minio.
+        extraConfig = ''
+          client_max_body_size 0;
+        '';
+      };
     };
   };
 
   security.acme = {
     acceptTerms = true;
     certs = {
-      "cache.adrianhesketh.com".email = "acme@adrianhesketh.com";
       "minio-console.adrianhesketh.com".email = "acme@adrianhesketh.com";
       "minio.adrianhesketh.com".email = "acme@adrianhesketh.com";
     };

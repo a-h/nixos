@@ -137,5 +137,10 @@ nix store info --store 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=
 Add `-vvvv` for verbose output.
 
 ```bash
+pass minio.adrianhesketh.com/nix-store-private-key.pem > ~/nix-store-private-key.pem
 nix copy --to 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=minio.adrianhesketh.com' .#devShells.x86_64-linux.default
+nix store sign -k ~/nix-store-private-key.pem --store 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=minio.adrianhesketh.com' .#devShells.x86_64-linux.default
+```
+
+It's also possible to copy `nix copy --to 's3://nix-cache?profile=minio-adrianhesketh-com&endpoint=minio.adrianhesketh.com' .#devShells.x86_64-linux.default` and then sign the store path.
 ```
