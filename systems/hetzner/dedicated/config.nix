@@ -44,9 +44,9 @@
 { system, inputs, pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
 {
   nixpkgs = {
-    overlays = ../../../overlays/default.nix {
+    overlays = (../../../overlays/default.nix {
       inherit system inputs;
-    }.overlays;
+    }).overlays;
     config = {
       allowUnfree = true;
     };
