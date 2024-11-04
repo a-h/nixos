@@ -18,8 +18,6 @@
         inherit system;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-          ];
         };
       });
       devTools = { system, pkgs }: [
@@ -49,6 +47,7 @@
         hetzner-dedicated-x86_64 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
+            system = "x86_64-linux";
             adrianSSHKey = adrianSSHKey;
             rootSSHKey = rootSSHKey;
             inputs = inputs;
