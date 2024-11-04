@@ -41,8 +41,17 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
+{ system, inputs, pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
 {
+  nixpkgs = {
+    overlays = (import ./overlays.nix {
+      inherit system inputs;
+    }).overlays;
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   nix.settings = {
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
