@@ -44,7 +44,7 @@
 { system, inputs, pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
 {
   nixpkgs = {
-    overlays = (import ./overlays.nix {
+    overlays = (import ../../../overlays/default.nix {
       inherit system inputs;
     }).overlays;
     config = {
