@@ -2,7 +2,10 @@
   inputs = {
     nix.url = "github:nixos/nix/2.24.10";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
+    nix-serve-ng = {
+      url = "github:aristanetworks/nix-serve-ng";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, nix, nix-serve-ng, ... }@inputs:
