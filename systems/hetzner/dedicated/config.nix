@@ -57,8 +57,11 @@
     auto-optimise-store = true;
   };
 
-  # Enable virtualisation.
-  virtualisation.libvirtd.enable = true;
+  # Virtualisation configuration.
+  virtualisation = {
+    libvirtd.enable = true;
+    docker.enable = true;
+  };
   programs.virt-manager.enable = true;
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   # Enable this system to cross-compile for aarch64-linux using kvm.
