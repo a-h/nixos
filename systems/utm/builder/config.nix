@@ -56,7 +56,7 @@
     root.hashedPassword = "!"; # Disable root login
     adrian = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" ];
+      extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [
         adrianSSHKey
         rootSSHKey
