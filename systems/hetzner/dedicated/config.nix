@@ -203,6 +203,28 @@
   };
 
   # https://github.com/fatedier/frp
+  #
+  # From a client, use an SSH tunnel to connect to the server (for now, can migrate to TLS later).
+  #
+  # ssh -L 7000:localhost:7000 adrian@65.109.61.232
+  #
+  # Then run the client:
+  #
+  # frpc --config ./frpc.toml
+  #
+  # The client TOML file should look like:
+  #
+  # # frpc.toml
+  # serverAddr = "127.0.0.1"
+  # serverPort = 7000
+  #
+  # [[proxies]]
+  # name = "web"
+  # type = "http"
+  # localPort = 8080
+  # customDomains = ["web.example.com"]
+  #
+  # Now, `curl -H "Host: web.example.com" http://65.109.61.232` will proxy to localhost:8080 on the frp client.
   services.frp = {
     enable = true;
     role = "server";
