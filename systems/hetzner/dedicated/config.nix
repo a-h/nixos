@@ -41,7 +41,7 @@
   sudo nixos-install --flake github:a-h/nixos#hetzner-dedicated-x86_64
 
 */
-{ system, inputs, pkgs, config, lib, adrianSSHKey, rootSSHKey, ... }:
+{ system, inputs, pkgs, config, adrianSSHKey, rootSSHKey, ... }:
 {
   nixpkgs = {
     overlays = (import ../../../overlays/default.nix {
@@ -197,64 +197,24 @@
       80 # For ACME challenges
       443 # HTTPS for cache.adrianhesketh.com
     ];
-    allowedUDPPorts = [ 4242 ]; # Nebula.
-
-    # Allow port 4343 from localhost, and from the lighthouse server on the local network.
-    extraCommands = ''
-      # Allow any traffic from the lighthouse network subnet (192.168.101.0/24)
-      # Nebula has its own rules, so we don't need to worry about that here.
-      iptables -A INPUT -p tcp --source 192.168.101.0/24 -j ACCEPT
-      # Allow port 53 UDP from the lightouse network subnet and localhost.
-      iptables -A INPUT -p udp --source 192.168.101.0/24 --dport 53 -j ACCEPT
-      iptables -A INPUT -p udp --source 127.0.0.1 --dport 53 -j ACCEPT
-    '';
+    allowedTCPPortRanges = [
+      { from = 10000; to = 11000; } # FRP range.
+    ];
   };
 
-  systemd.services."nebula@mesh".serviceConfig.CapabilityBoundingSet = lib.mkForce "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
-  systemd.services."nebula@mesh".serviceConfig.AmbientCapabilities = lib.mkForce "CAP_NET_ADMIN CAP_NET_BIND_SERVICE";
-  services.nebula.networks.mesh = {
+  # https://github.com/fatedier/frp
+  services.frp = {
     enable = true;
-    isLighthouse = true;
-    isRelay = true; # Allow other nodes to connect to this node.
-    cert = "/etc/nebula/lighthouse.adrianhesketh.com.crt";
-    key = "/etc/nebula/lighthouse.adrianhesketh.com.key";
-    ca = "/etc/nebula/ca.crt";
+    role = "server";
     settings = {
-      lighthouse = {
-        serve_dns = true;
-        dns = {
-          host = "192.168.101.1";
-          port = 53;
-        };
-      };
-    };
-    firewall = {
-      inbound = [
-        # Allow ping from anywhere.
-        {
-          port = "any";
-          proto = "icmp";
-          host = "any";
-        }
-        # Enable any host on the Nebula network to use this node as a DNS server.
-        {
-          port = 53;
-          proto = "udp";
-          host = "any";
-        }
-        {
-          port = 53;
-          proto = "tcp";
-          host = "any";
-        }
-      ];
-      outbound = [
-        # Allow all outbound traffic from this node.
-        {
-          port = "any";
-          proto = "any";
-          host = "any";
-        }
+      # Make FRP only accessible via localhost, use SSH tunneling to connect a client.
+      # ssh -i ~/.ssh/id_rsa -L 7000:localhost:7000 user@your_server_ip
+      # Then configure frpc to connect to localhost:7000.
+      bindAddr = "127.0.0.1";
+      # Nginx will proxy from 80 on the server to localhost:9090.
+      vhostHTTPPort = 9090;
+      allowPorts = [
+        { start = 10000; end = 11000; } # For TCP connections.
       ];
     };
   };
@@ -299,6 +259,12 @@
         extraConfig = ''
           client_max_body_size 0;
         '';
+      };
+    };
+    # Send anything that's not matched to FRP.
+    virtualHosts."_" = {
+      locations."/" = {
+        proxyPass = "http://localhost:9090";
       };
     };
   };
