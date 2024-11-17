@@ -3,47 +3,46 @@
   # e.g. cmptr.cc -> 65.109.61.232
   services.dnsmasq = {
     enable = true;
-    extraConfig = ''
-      # Set domain.
-      domain=cmptr.cc
+    settings = {
+      domain = "cmptr.cc"; # The domain to add to the end of hostnames. (eg. "router" -> "router.lan")
 
-      # Make dnsmasq authoritative for cmptr.cc
-      auth-zone=cmptr.cc
+      auth-zone = [ "cmptr.cc" "internal.cmptr.cc" ]; # Make dnsmasq authoritative for cmptr.cc and internal.cmptr.cc.
+      local = "/internal.cmptr.cc/"; # Define internal domain.
 
-      # Define internal domain.
-      auth-zone=internal.cmptr.cc
-      local=/internal.cmptr.cc/
+      auth-server = "ns1.cmptr.cc"; # Set the authoritative DNS server name (applies to all zones)
 
-      # Set the authoritative DNS server name (applies to all zones)
-      auth-server=ns1.cmptr.cc
+      # TODO: Replace the internal IP later.
+      host-record = [
+        "ns1.cmptr.cc,65.109.61.232"
+        "ns1.internal.cmptr.cc,192.168.1.1"
+        "cmptr.cc,65.109.61.232"
+        "minio.cmptr.cc,65.109.61.232"
+      ];
 
-      # Define NS records for cmptr.cc and internal.cmptr.cc
-      host-record=ns1.cmptr.cc,65.109.61.232
-      host-record=ns1.internal.cmptr.cc,192.168.1.1  # Replace with your internal IP
-
-      # Set up the primary A record for cmptr.cc
-      host-record=cmptr.cc,65.109.61.232
-
-      # Manual definitions for *.cmptr.cc
-      host-record=minio.cmptr.cc,65.109.61.232
-
-      # Wildcard subdomains pointing to your server.
-      address=/.cmptr.cc/65.109.61.232
+      address = "/.cmptr.cc/65.109.61.232"; # Point all subdomains to the server.
 
       # Additional hosts files for dynamic updates.
       # TODO: Manage these files using a systemd service that updates them.
       # The file structure is a simple line:
       # 65.109.61.232 minio.cmptr.cc
-      addn-hosts=/mnt/secrets/dnsmasq/external.hosts
-      addn-hosts=/mnt/secrets/dnsmasq/internal.hosts
+      addn-hosts = [
+        "/mnt/secrets/dnsmasq/external.hosts"
+        "/mnt/secrets/dnsmasq/internal.hosts"
+      ];
+
+      # Sensible config
+      stop-dns-rebind = true; # Prevent DNS rebinding attacks.
+      domain-needed = true; # Don't forward DNS requests without dots/domain parts to upstream servers.
+      bogus-priv = true; # If a private IP lookup (192.168.x.x, etc.) fails, it will be answered with "no such domain", instead of forwarded to upstream.
+      no-resolv = true; # Don't read upstream servers from /etc/resolv.conf
+      no-hosts = true; # Don't obtain any hosts from /etc/hosts, as this would make 'localhost' this machine for all clients!
+
+      # Custom DNS options
+      server = [ "1.1.1.1" "1.0.0.1" ]; # Upstream DNS servers.
 
       # Bind to public and internal interfaces.
-      interface=enp41s0  # External interface.
-      # interface=enp42s0  # Internal interface. Replace with your actual internal interface.
-
-      # Security options.
-      stop-dns-rebind
-    '';
+      interface = "enp41s0"; # External interface.
+    };
   };
 
   systemd.services."create-empty-hosts-files" = {
