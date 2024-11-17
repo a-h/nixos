@@ -55,6 +55,7 @@
           modules = [
             ./systems/hetzner/dedicated/config.nix
             ./systems/hetzner/dedicated/dnsmasq.nix
+            ./systems/hetzner/dedicated/frp.nix
           ];
         };
         builder-x86_64 = nixpkgs.lib.nixosSystem {
